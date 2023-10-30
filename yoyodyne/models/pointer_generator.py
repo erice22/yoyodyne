@@ -315,7 +315,15 @@ class PointerGeneratorLSTMEncoderDecoder(lstm.LSTMEncoderDecoder):
         Returns:
             torch.Tensor.
         """
-        encoder_output = self.source_encoder(batch.source)
+        if self.tama_encoder_strategy != "none" or self.tama_decoder_strategy != "none":
+            trans = batch.translation_tensors.padded
+            num_elts = (~trans.sum(-1).eq(0)).sum(-1, keepdims=True)
+            avg_pooled = trans.sum(-2) / num_elts
+            avg_pooled = torch.where(~num_elts.eq(0), avg_pooled, 0)
+            projected_translation = F.dropout(self.tama_projection(avg_pooled), 0.3, self.training)
+        else:
+            projected_translation = None
+        encoder_output = self.source_encoder(batch, projected_translation).output
         source_encoded = encoder_output.output
         if encoder_output.has_hiddens:
             h_source, c_source = encoder_output.hiddens
