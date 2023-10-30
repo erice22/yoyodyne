@@ -324,7 +324,7 @@ class PointerGeneratorLSTMEncoderDecoder(lstm.LSTMEncoderDecoder):
         else:
             projected_translation = None
         print(type(self.source_encoder(batch, projected_translation)))
-        encoder_output = self.source_encoder(batch, projected_translation).output
+        encoder_output = (self.source_encoder(batch, projected_translation)).output
         source_encoded = encoder_output.output
         if encoder_output.has_hiddens:
             h_source, c_source = encoder_output.hiddens
