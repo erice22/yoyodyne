@@ -201,6 +201,7 @@ class PointerGeneratorLSTMEncoderDecoder(lstm.LSTMEncoderDecoder):
         # Gets the attentions to the source in terms of the output generations.
         # These are the "pointer" distribution.
         # -> B x 1 x target_vocab_size.
+        print(ptr_probs.shape)
         print(source_indices.shape)
         print(attention_weights.shape)
         ptr_probs.scatter_add_(
