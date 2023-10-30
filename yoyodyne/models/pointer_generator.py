@@ -323,6 +323,7 @@ class PointerGeneratorLSTMEncoderDecoder(lstm.LSTMEncoderDecoder):
             projected_translation = F.dropout(self.tama_projection(avg_pooled), 0.3, self.training)
         else:
             projected_translation = None
+        print(type(self.source_encoder(batch, projected_translation)))
         encoder_output = self.source_encoder(batch, projected_translation).output
         source_encoded = encoder_output.output
         if encoder_output.has_hiddens:
