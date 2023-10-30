@@ -201,6 +201,8 @@ class PointerGeneratorLSTMEncoderDecoder(lstm.LSTMEncoderDecoder):
         # Gets the attentions to the source in terms of the output generations.
         # These are the "pointer" distribution.
         # -> B x 1 x target_vocab_size.
+        print(source_indices.shape)
+        print(attention_weights.shape)
         ptr_probs.scatter_add_(
             2, source_indices.unsqueeze(1), attention_weights
         )
@@ -323,8 +325,7 @@ class PointerGeneratorLSTMEncoderDecoder(lstm.LSTMEncoderDecoder):
             projected_translation = F.dropout(self.tama_projection(avg_pooled), 0.3, self.training)
         else:
             projected_translation = None
-        print(type(self.source_encoder(batch, projected_translation)))
-        encoder_output = (self.source_encoder(batch, projected_translation)).output
+        encoder_output = self.source_encoder(batch, projected_translation)
         source_encoded = encoder_output.output
         if encoder_output.has_hiddens:
             h_source, c_source = encoder_output.hiddens
