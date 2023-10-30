@@ -194,13 +194,14 @@ class PointerGeneratorLSTMEncoderDecoder(lstm.LSTMEncoderDecoder):
         # -> B x 1 x target_vocab_size.
         ptr_probs = torch.zeros(
             symbol.size(0),
-            self.target_vocab_size+1,
+            self.target_vocab_size,
             device=self.device,
             dtype=attention_weights.dtype,
         ).unsqueeze(1)
         # Gets the attentions to the source in terms of the output generations.
         # These are the "pointer" distribution.
         # -> B x 1 x target_vocab_size.
+        print(source_indices)
         print(ptr_probs.shape)
         print(source_indices.shape)
         print(attention_weights.shape)
