@@ -85,7 +85,6 @@ class PointerGeneratorLSTMEncoderDecoder(lstm.LSTMEncoderDecoder):
         """Initializes the pointer-generator model with an LSTM backend."""
         super().__init__(*args, **kwargs)
         self._check_layer_sizes()
-        self.target_vocab_size = self.target_vocab_size + 2
         # We use the inherited defaults for the source embeddings/encoder.
         # Overrides classifier to take larger input.
         if not self.has_features_encoder:
