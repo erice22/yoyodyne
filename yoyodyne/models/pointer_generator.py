@@ -194,7 +194,7 @@ class PointerGeneratorLSTMEncoderDecoder(lstm.LSTMEncoderDecoder):
         # -> B x 1 x target_vocab_size.
         ptr_probs = torch.zeros(
             symbol.size(0),
-            self.target_vocab_size,
+            self.target_vocab_size+1,
             device=self.device,
             dtype=attention_weights.dtype,
         ).unsqueeze(1)
