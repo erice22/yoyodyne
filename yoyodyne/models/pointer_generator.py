@@ -201,7 +201,6 @@ class PointerGeneratorLSTMEncoderDecoder(lstm.LSTMEncoderDecoder):
         # Gets the attentions to the source in terms of the output generations.
         # These are the "pointer" distribution.
         # -> B x 1 x target_vocab_size.
-        print(source_indices)
         print(ptr_probs.shape)
         print(source_indices.shape)
         print(attention_weights.shape)
@@ -209,10 +208,10 @@ class PointerGeneratorLSTMEncoderDecoder(lstm.LSTMEncoderDecoder):
             2, source_indices.unsqueeze(1), attention_weights
         )
         # Probability of generating (from output_probs).
-        print(gen_probs.shape)
         gen_probs = self.generation_probability(
             context, hidden, embedded
         ).unsqueeze(2)
+        print(gen_probs.shape)
         ptr_scores = (1 - gen_probs) * ptr_probs
         gen_scores = gen_probs * output_probs
         scores = gen_scores + ptr_scores
