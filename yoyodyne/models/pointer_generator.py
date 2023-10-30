@@ -79,7 +79,7 @@ class PointerGeneratorLSTMEncoderDecoder(lstm.LSTMEncoderDecoder):
     """
 
     # Constructed inside __init__.
-    geneneration_probability: GenerationProbability
+    generation_probability: GenerationProbability
 
     def __init__(self, *args, **kwargs):
         """Initializes the pointer-generator model with an LSTM backend."""
@@ -209,6 +209,7 @@ class PointerGeneratorLSTMEncoderDecoder(lstm.LSTMEncoderDecoder):
             2, source_indices.unsqueeze(1), attention_weights
         )
         # Probability of generating (from output_probs).
+        print(gen_probs.shape)
         gen_probs = self.generation_probability(
             context, hidden, embedded
         ).unsqueeze(2)
